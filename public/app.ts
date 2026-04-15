@@ -63,7 +63,6 @@ class ServerMonitor {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(address);
                     } else {
-                        // fallback for older browsers
                         const textarea = document.createElement('textarea');
                         textarea.value = address;
                         textarea.style.position = 'fixed';
@@ -75,7 +74,6 @@ class ServerMonitor {
                         document.body.removeChild(textarea);
                     }
 
-                    // UI feedback
                     const hint = row.querySelector('.copy-hint') as HTMLElement | null;
                     if (hint) {
                         const original = hint.textContent;
