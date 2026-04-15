@@ -7,7 +7,7 @@ const BEDROCK_PORT = 5659
 const app = new Elysia()
     .get('/status', async () => {
         try {
-            const res = await fetch(`https://api.mcsrvstat.us/bedrock/simple/${BEDROCK_IP}:${BEDROCK_PORT}`);
+            const res = await fetch(`https://api.mcsrvstat.us/${BEDROCK_IP}:${BEDROCK_PORT}`);
             const data = await res.json();
             
             if (!data.online) {
