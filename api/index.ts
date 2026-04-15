@@ -15,6 +15,7 @@ const app = new Elysia()
             try {
                 const res = await fetch(`https://mcsrvstat.us${BEDROCK_IP}:${BEDROCK_PORT}`);
                 const data = await res.json();
+                
                 if (!data.online) {
                     const javaRes = await fetch(`https://mcsrvstat.us${JAVA_IP}`);
                     const javaData = await javaRes.json();
@@ -23,11 +24,11 @@ const app = new Elysia()
 
                 return formatResponse(data);
             } catch (e) {
-                return { online: false };
+                return { online: false, error: String(e) };
             }
         })
-    )
-    .listen(3000);
+    );
+
 function formatResponse(data: any) {
     return {
         online: data.online,
@@ -42,5 +43,4 @@ function formatResponse(data: any) {
     };
 }
 
-export const GET = app.handle;
-export const POST = app.handle;
+export default app;
