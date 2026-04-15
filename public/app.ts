@@ -50,46 +50,44 @@ class ServerMonitor {
         (document.getElementById('statusText') as HTMLElement).className = 'status-text offline';
         (document.getElementById('playerList') as HTMLElement).innerHTML = '<span class="no-players">server unreachable</span>';
     }
-
     private initCopyHandlers() {
-        const rows = document.querySelectorAll<HTMLElement>('.address-row');
+    document.addEventListener('click', async (e) => {
+        const target = (e.target as HTMLElement).closest('.ipcopy') as HTMLElement | null;
+        if (!target) return;
 
-        rows.forEach(row => {
-            row.addEventListener('click', async () => {
-                const address = row.getAttribute('data-address');
-                if (!address) return;
+        const address = target.getAttribute('data-address');
+        if (!address) return;
 
-                try {
-                    if (navigator.clipboard && window.isSecureContext) {
-                        await navigator.clipboard.writeText(address);
-                    } else {
-                        const textarea = document.createElement('textarea');
-                        textarea.value = address;
-                        textarea.style.position = 'fixed';
-                        textarea.style.opacity = '0';
-                        document.body.appendChild(textarea);
-                        textarea.focus();
-                        textarea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textarea);
-                    }
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(address);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = address;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
 
-                    const hint = row.querySelector('.copy-hint') as HTMLElement | null;
-                    if (hint) {
-                        const original = hint.textContent;
-                        hint.textContent = '[ COPIED! ]';
+            const hint = target.querySelector('.copy-hint') as HTMLElement | null;
+            if (hint) {
+                const original = hint.textContent;
+                hint.textContent = '[ COPIED! ]';
 
-                        setTimeout(() => {
-                            hint.textContent = original!;
-                        }, 1500);
-                    }
+                setTimeout(() => {
+                    hint.textContent = original!;
+                }, 1500);
+            }
 
-                } catch {
-                    alert('Failed to copy address');
-                }
-            });
-        });
-    }
+        } catch {
+            alert('Failed to copy address');
+        }
+    });
+}
 }
 
 new ServerMonitor();
