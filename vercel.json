@@ -6,8 +6,8 @@
     { "source": "/(.*)", "destination": "/public/$1" }
   ],
   "functions": {
-    "api/index.ts": {
-      "runtime": "vercel-bun"
-    }
+  "api/index.ts": {
+    "runtime": "vercel-bun@0.1.1"
   }
+}
 }
