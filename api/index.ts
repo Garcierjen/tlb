@@ -18,7 +18,7 @@ const app = new Elysia({ prefix: '/api' })
                     max: bedrock.players?.max || java.players?.max || 0,
                     list: java.players?.list?.map((p: any) => typeof p === 'string' ? p : p.name) || []
                 },
-                version: bedrock.version || "1.21.x",
+                version: bedrock.version || "26.10",
                 motd: bedrock.motd?.clean || java.motd?.clean || ["TheLarpBucket SMP"]
             };
         } catch (e) {
