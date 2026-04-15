@@ -17,11 +17,11 @@ const app = new Elysia()
 async function getStatus() {
     try {
         // ใช้ api.mcsrvstat.us/3/ จะเสถียรกว่ามากสำหรับ Vercel
-        const res = await fetch(`https://api.mcsrvstat.us/3/{BEDROCK_IP}:${BEDROCK_PORT}`);
+        const res = await fetch(`https://api.mcsrvstat.us/3/${BEDROCK_IP}:${BEDROCK_PORT}`);
         const data = await res.json();
         
         if (!data.online) {
-            const javaRes = await fetch(`https://api.mcsrvstat.us/3/{JAVA_IP}`);
+            const javaRes = await fetch(`https://api.mcsrvstat.us/3/${JAVA_IP}`);
             const javaData = await javaRes.json();
             if (javaData.online) return formatResponse(javaData);
         }
