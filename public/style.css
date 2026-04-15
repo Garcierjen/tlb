@@ -150,7 +150,8 @@ body::before {
       transition: 0.2s;
     }
 
-    .address-row:hover { background: rgba(57, 255, 20, 0.05); border-color: var(--green); }
+    .address-row:hover { background: rgba(57, 255, 20, 0.05); border-color: var(--green); cursor: pointer;
+    user-select: none;}
     .address-label { font-size: 12px; color: var(--dim); }
     .address-value { font-size: 18px; color: var(--green); }
     .copy-hint { font-size: 12px; float: right; color: var(--dim); }
