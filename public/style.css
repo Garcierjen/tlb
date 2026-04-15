@@ -173,7 +173,7 @@ body::before {
 footer {
   display: flex;
   flex-direction: row;
-  align-items: center;  /* จัดทุกอย่างให้อยู่กึ่งกลางแนวนอน */
+  align-items: center; 
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
@@ -181,7 +181,7 @@ footer {
   margin-top: 40px;
   margin-bottom: 50px;
   color: #4a5a4a;
-  font-size: 24px;      /* แนะนำใช้ px แทน pt เพื่อคุมขนาดง่ายขึ้น */
+  font-size: 24px; 
 }
 
 @media (max-width: 600px) {
