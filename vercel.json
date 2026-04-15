@@ -7,7 +7,7 @@
   ],
   "functions": {
     "api/index.ts": {
-      "runtime": "vercel-bun@1.2.0"
+      "runtime": "vercel-bun"
     }
   }
 }
