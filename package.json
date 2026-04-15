@@ -5,6 +5,7 @@
     "dev": "bun run --watch api/index.ts"
   },
   "dependencies": {
+    "@elysiajs/static": "^1.4.9",
     "elysia": "latest"
   },
   "devDependencies": {
