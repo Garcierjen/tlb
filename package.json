@@ -2,8 +2,8 @@
   "name": "tlb-smp",
   "scripts": {
     "build": "bun build public/app.ts --outdir public/dist", 
-    "dev": "bun run --watch index.ts", 
-    "start": "bun run index.ts"
+    "dev": "bun run --watch api/index.ts", 
+    "start": "bun run api/index.ts"
   },
   "dependencies": {
     "@elysiajs/static": "^1.4.9",
