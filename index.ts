@@ -13,11 +13,11 @@ const app = new Elysia()
     .group('/api', (app) =>
         app.get('/status', async () => {
             try {
-                const res = await fetch(`https://mcsrvstat.us${BEDROCK_IP}:${BEDROCK_PORT}`);
+                const res = await fetch(`https://mcsrvstat.us/${BEDROCK_IP}:${BEDROCK_PORT}`);
                 const data = await res.json();
                 
                 if (!data.online) {
-                    const javaRes = await fetch(`https://mcsrvstat.us${JAVA_IP}`);
+                    const javaRes = await fetch(`https://mcsrvstat.us/${JAVA_IP}`);
                     const javaData = await javaRes.json();
                     if (javaData.online) return formatResponse(javaData);
                 }
