@@ -52,7 +52,7 @@ class ServerMonitor {
     }
 
     private initCopyHandlers() {
-        const rows = document.querySelectorAll<HTMLElement>('.ipcopy');
+        const rows = document.querySelectorAll<HTMLElement>('.address-row');
 
         rows.forEach(row => {
             row.addEventListener('click', async () => {
