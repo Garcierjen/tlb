@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "bunVersion": "1.x",
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node" 
+    }
+  ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.ts" },
+    { "source": "/api/(.*)", "destination": "api/index.ts" },
     { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
