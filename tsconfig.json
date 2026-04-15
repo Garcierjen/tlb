@@ -23,10 +23,11 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true
   },
-  "include": [
+    "include": [
+    "index.ts",
     "api/**/*",  
     "public/**/*.ts" 
-, "api/index.ts"  ],
+  ],
   "exclude": [
     "node_modules",
     "public/dist"
