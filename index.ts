@@ -6,28 +6,30 @@ const BEDROCK_IP = 'allows-surveys.gl.at.ply.gg'
 const BEDROCK_PORT = 5659
 
 const app = new Elysia()
+    // 1. เพิ่ม Route ตรงๆ ไว้ที่ Root ของ App เพื่อกันพลาด
+    .get('/api/status', () => getStatus())
+    .get('/status', () => getStatus()) // รองรับกรณี Vercel ตัด /api ออก
     .use(staticPlugin({
         assets: 'public',
         prefix: '/'
-    }))
-    .group('/api', (app) =>
-        app.get('/status', async () => {
-            try {
-                const res = await fetch(`https://mcsrvstat.us/${BEDROCK_IP}:${BEDROCK_PORT}`);
-                const data = await res.json();
-                
-                if (!data.online) {
-                    const javaRes = await fetch(`https://mcsrvstat.us/${JAVA_IP}`);
-                    const javaData = await javaRes.json();
-                    if (javaData.online) return formatResponse(javaData);
-                }
+    }));
 
-                return formatResponse(data);
-            } catch (e) {
-                return { online: false, error: String(e) };
-            }
-        })
-    );
+async function getStatus() {
+    try {
+        // ใช้ api.mcsrvstat.us/3/ จะเสถียรกว่ามากสำหรับ Vercel
+        const res = await fetch(`https://api.mcsrvstat.us/3/{BEDROCK_IP}:${BEDROCK_PORT}`);
+        const data = await res.json();
+        
+        if (!data.online) {
+            const javaRes = await fetch(`https://api.mcsrvstat.us/3/{JAVA_IP}`);
+            const javaData = await javaRes.json();
+            if (javaData.online) return formatResponse(javaData);
+        }
+        return formatResponse(data);
+    } catch (e) {
+        return { online: false, error: "API Fetch Error" };
+    }
+}
 
 function formatResponse(data: any) {
     return {
@@ -43,9 +45,5 @@ function formatResponse(data: any) {
     };
 }
 
-
-export const GET = app.fetch;
-export const POST = app.fetch;
-export const PUT = app.fetch;
-export const DELETE = app.fetch;
-export const PATCH = app.fetch;
+// ใช้ Export Default สำหรับ Bun Runtime บน Vercel
+export default app;
