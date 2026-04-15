@@ -1,0 +1,13 @@
+{
+  "name": "tlb-smp",
+  "scripts": {
+    "build": "bun build public/app.ts --outdir public/dist"
+  },
+  "dependencies": {
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.0.0"
+  }
+}
