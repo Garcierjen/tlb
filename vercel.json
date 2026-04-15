@@ -2,7 +2,6 @@
   "version": 2,
   "bunVersion": "1.x",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/index.ts" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/(.*)", "destination": "/public/$1" }
   ]

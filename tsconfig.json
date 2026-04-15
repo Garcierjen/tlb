@@ -24,7 +24,7 @@
     "resolveJsonModule": true
   },
     "include": [
-    "index.ts",
+    "api/index.ts",
     "api/**/*",  
     "public/**/*.ts" 
   ],
