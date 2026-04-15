@@ -1,30 +1,46 @@
 import { Elysia } from 'elysia'
+import { staticPlugin } from '@elysiajs/static'
 
-const HOST = 'allows-surveys.gl.at.ply.gg:5659'
-const JAVA_HOST = 'feedback-recorders.gl.joinmc.link'
+const JAVA_IP = 'feedback-recorders.gl.joinmc.link'
+const BEDROCK_IP = 'allows-surveys.gl.at.ply.gg'
+const BEDROCK_PORT = 5659
 
-const app = new Elysia({ prefix: '/api' })
-    .get('/status', async () => {
-        try {
-            const [bedrock, java] = await Promise.all([
-                fetch(`https://mcsrvstat.us{HOST}`).then(r => r.json()),
-                fetch(`https://mcsrvstat.us{JAVA_HOST}`).then(r => r.json())
-            ]);
+const app = new Elysia()
+    .use(staticPlugin({
+        assets: 'public',
+        prefix: '/'
+    }))
+    .group('/api', (app) =>
+        app.get('/status', async () => {
+            try {
+                const res = await fetch(`https://mcsrvstat.us${BEDROCK_IP}:${BEDROCK_PORT}`);
+                const data = await res.json();
+                if (!data.online) {
+                    const javaRes = await fetch(`https://mcsrvstat.us${JAVA_IP}`);
+                    const javaData = await javaRes.json();
+                    if (javaData.online) return formatResponse(javaData);
+                }
 
-            return {
-                online: bedrock.online || java.online,
-                players: {
-                    online: bedrock.players?.online || java.players?.online || 0,
-                    max: bedrock.players?.max || java.players?.max || 0,
-                    list: java.players?.list?.map((p: any) => typeof p === 'string' ? p : p.name) || []
-                },
-                version: bedrock.version || "26.10",
-                motd: bedrock.motd?.clean || java.motd?.clean || ["TheLarpBucket SMP"]
-            };
-        } catch (e) {
-            return { online: false, error: 'API_TIMEOUT' };
-        }
-    });
+                return formatResponse(data);
+            } catch (e) {
+                return { online: false };
+            }
+        })
+    )
+    .listen(3000);
+function formatResponse(data: any) {
+    return {
+        online: data.online,
+        players: {
+            online: data.players?.online ?? 0,
+            max: data.players?.max ?? 0,
+            list: data.players?.list?.map((p: any) => typeof p === 'string' ? p : p.name) ?? []
+        },
+        version: data.version ?? "1.21.x",
+        motd: data.motd?.clean ?? ["TheLarpBucket SMP"],
+        hostname: data.hostname
+    };
+}
 
 export const GET = app.handle;
 export const POST = app.handle;

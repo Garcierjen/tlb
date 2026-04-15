@@ -1,7 +1,8 @@
 {
   "name": "tlb-smp",
   "scripts": {
-    "build": "bun build public/app.ts --outdir public/dist"
+    "build": "bun build public/app.ts --outdir public/dist",
+    "dev": "bun run --watch api/index.ts"
   },
   "dependencies": {
     "elysia": "latest"
