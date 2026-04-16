@@ -3,7 +3,7 @@
   "bunVersion": "1.x",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index.ts" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/$1" }
   ]
 }

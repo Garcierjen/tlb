@@ -5,7 +5,7 @@
     "moduleResolution": "bundler",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["bun-types"],
-    "outDir": "./public/dist",
+    "outDir": "./",
     "rootDir": "./",
     "noEmit": false,
     "strict": true,
@@ -25,11 +25,9 @@
   },
     "include": [
     "api/index.ts",
-    "api/**/*",  
-    "public/**/*.ts" 
-  ],
+    "api/**/*"
+, "app.ts"  ],
   "exclude": [
-    "node_modules",
-    "public/dist"
+    "node_modules"
   ]
 }
