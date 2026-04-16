@@ -1,7 +1,7 @@
 {
   "name": "tlb-smp",
   "scripts": {
-    "build": "bun build public/app.ts --outdir public/dist", 
+    "build": "bun build public/app.ts --outdir public", 
     "dev": "bun run --watch api/index.ts", 
     "start": "bun run api/index.ts"
   },
