@@ -5,7 +5,7 @@ const BEDROCK_IP = 'allows-surveys.gl.at.ply.gg'
 const BEDROCK_PORT = 5659
 
 const app = new Elysia()
-  .get('/api/status', async () => {
+  .get('/status', async () => {
     try {
       const res = await fetch(
         `https://api.mcsrvstat.us/3/${BEDROCK_IP}:${BEDROCK_PORT}`
