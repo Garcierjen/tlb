@@ -12,63 +12,70 @@
   <link rel="icon" href="assets/tlb.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
-  <link href="assets/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
 <div class="container">
-  <div class="title">⛏ THELARPBUCKET SMP ⛏</div>
-  <div class="subtitle">Server Status</div>
+  <div class="title">⛏ TheLarpBucket SMP⛏</div>
+  <div class="subtitle">— status —</div>
 
   <div class="panel">
+
     <div class="status-row">
-      <div id="led" class="led"></div>
-      <div id="statusText" class="status-text">INITIALIZING...</div>
+      <div class="led" id="led"></div>
+      <div class="status-text loading" id="statusText">CHECKING...</div>
     </div>
 
     <div class="stats">
       <div class="stat-box">
-        <div class="stat-label">PLAYERS_ONLINE</div>
-        <div id="playersOnline" class="stat-value">--</div>
+        <div class="stat-label">PLAYERS (java & bedrock)</div>
+        <div class="stat-value" id="playersOnline">—</div>
       </div>
       <div class="stat-box">
-        <div class="stat-label">MAX_CAPACITY</div>
-        <div id="playersMax" class="stat-value gold">--</div>
+        <div class="stat-label">MAX SLOTS</div>
+        <div class="stat-value gold" id="playersMax">—</div>
       </div>
       <div class="stat-box">
-        <div class="stat-label">LATENCY_MS</div>
-        <div id="ping" class="stat-value">--</div>
+        <div class="stat-label">VERSION</div>
+        <div class="stat-value" id="version" style="font-size:20px">1.21.11 / 26.10</div>
       </div>
       <div class="stat-box">
-        <div class="stat-label">UPLINK</div>
-        <div class="stat-value" style="font-size: 16px;">STABLE</div>
+        <div class="stat-label">PING</div>
+        <div class="stat-value" id="ping">—</div>
       </div>
     </div>
 
-    <div id="motd" class="motd">Syncing with server MOTD...</div>
+    <div class="motd" id="motd">...</div>
 
     <div class="players-section">
-      <div class="section-label">DETECTED_BIOMETRICS (JAVA)</div>
-      <div id="playerList" class="player-list">
-        <span style="color: var(--dim)">Scanning for signals...</span>
+      <div class="section-label">ONLINE PLAYERS (java)</div>
+      <div class="player-list" id="playerList">
+        <span class="no-players">waiting for data...</span>
       </div>
     </div>
 
-    <div class="address-row">
-      <span class="copy-hint">[ CLICK TO COPY ]</span>
-      <div class="address-label">JAVA_ENDPOINT (1.21.11)</div>
-      <div class="address-value">feedback-recorders.gl.joinmc.link</div>
+    <div class="address-row" onclick="copyAddress('feedback-recorders.gl.joinmc.link', 'copyHint1')">
+      <div>
+        <div class="address-label">☕ JAVA</div>
+        <div class="address-value" style="font-size:17px">feedback-recorders.gl.joinmc.link</div>
+      </div>
+      <div class="copy-hint" id="copyHint1">[ CLICK TO COPY ]</div>
+    </div>
+    <div class="address-row" onclick="copyAddress('thelarpsmp.mooo.com', 'copyHint2')">
+      <div>
+        <div class="address-label">🪨 BEDROCK (PORT: 5659)</div>
+        <div class="address-value">allows-surveys.gl.at.ply.gg</div>
+      </div>
+      <div class="copy-hint" id="copyHint2">[ CLICK TO COPY ]</div>
     </div>
 
-    <div class="address-row">
-      <span class="copy-hint">[ CLICK TO COPY ]</span>
-      <div class="address-label">BEDROCK_ENDPOINT (26.10, Port : 5659)</div>
-      <div class="address-value">allows-surveys.gl.at.ply.gg</div>
-    </div>
-
-    <button id="refreshBtn" class="refresh-btn">▶ REFRESH STATUS</button>
+    <button class="refresh-btn" id="refreshBtn" onclick="fetchStatus()">
+      ▶ REFRESH STATUS
+    </button>
   </div>
 
+  <div class="footer" id="lastChecked">last checked: —</div>
   <footer class="site-footer">
   <div class="footer-section">
     <span>Our Discord :
@@ -77,10 +84,8 @@
     </a>
   </span>
   </div>
-
-</footer>
-
-
+  </footer>
+  <footer>Got the template off github lol. - Strandberg</footer>
 </div>
 
 <script src="assets/logic.js"></script>
