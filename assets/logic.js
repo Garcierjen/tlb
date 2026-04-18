@@ -40,7 +40,7 @@ async function queryAPI(url) {
         list: data.players?.list ?? []
       },
       version: {
-        name: data.version?.name_clean ?? data.version?.name ?? '1.21.11 / 26.10'
+        name: data.version?.name_clean ?? data.version?.name ?? null
       },
       motd: {
         clean: Array.isArray(data.motd?.clean)
@@ -105,6 +105,18 @@ async function fetchStatus() {
 
   const data = r1 || r2;
   const ping = Date.now() - t0;
+  const version1 = r1?.version?.name;
+  const version2 = r2?.version?.name;
+
+  let combinedVersion = 'unknown';
+
+  if (version1 && version2) {
+    combinedVersion = version1 === version2
+      ? version1
+      : `${version1} / ${version2}`;
+  } else if (version1 || version2) {
+    combinedVersion = version1 || version2;
+  }
 
   if (data) {
     led.className = 'led online';
@@ -113,9 +125,9 @@ async function fetchStatus() {
 
     document.getElementById('playersOnline').textContent = data.players?.online ?? '0';
     document.getElementById('playersMax').textContent    = data.players?.max ?? '?';
-    document.getElementById('version').textContent       = data.version?.name ?? '1.21.11 / 26.10';
+    document.getElementById('version').textContent       = combinedVersion;
     document.getElementById('ping').textContent          = ping + 'ms';
-    document.getElementById('motd').textContent          =
+    document.getElementById('motd').textContent =
       data.motd?.clean?.join(' ') || '(no message set)';
 
     const list = document.getElementById('playerList');
@@ -149,7 +161,7 @@ async function fetchStatus() {
 function reset() {
   document.getElementById('playersOnline').textContent = '—';
   document.getElementById('playersMax').textContent    = '—';
-  document.getElementById('version').textContent       = '1.21.11 / 26.10';
+  document.getElementById('version').textContent       = 'unknown';
   document.getElementById('ping').textContent          = '—';
   document.getElementById('motd').textContent          = '—';
   document.getElementById('playerList').innerHTML =
