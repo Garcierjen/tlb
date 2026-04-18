@@ -1,11 +1,10 @@
 const HOST      = 'allows-surveys.gl.at.ply.gg:5659';
 const JAVA_HOST = 'feedback-recorders.gl.joinmc.link';
-
+const STATIC_VERSION = '1.21.11 / 26.10';
 const APIS = [
   `https://api.mcsrvstat.us/3/${HOST}`,
   `https://api.mcstatus.io/v2/status/bedrock/${HOST}`
 ];
-
 let isFetching = false; 
 
 function debounce(fn, delay = 1000) {
@@ -38,9 +37,6 @@ async function queryAPI(url) {
         online: data.players?.online ?? 0,
         max: data.players?.max ?? 0,
         list: data.players?.list ?? []
-      },
-      version: {
-        name: data.version?.name_clean ?? data.version?.name ?? null
       },
       motd: {
         clean: Array.isArray(data.motd?.clean)
@@ -102,21 +98,8 @@ async function fetchStatus() {
   const r1 = results[0].status === 'fulfilled' ? results[0].value : null;
   const r2 = results[1].status === 'fulfilled' ? results[1].value : null;
   const javaPlayers = results[2].status === 'fulfilled' ? results[2].value : [];
-
   const data = r1 || r2;
   const ping = Date.now() - t0;
-  const version1 = r1?.version?.name;
-  const version2 = r2?.version?.name;
-
-  let combinedVersion = 'unknown';
-
-  if (version1 && version2) {
-    combinedVersion = version1 === version2
-      ? version1
-      : `${version1} / ${version2}`;
-  } else if (version1 || version2) {
-    combinedVersion = version1 || version2;
-  }
 
   if (data) {
     led.className = 'led online';
@@ -125,7 +108,7 @@ async function fetchStatus() {
 
     document.getElementById('playersOnline').textContent = data.players?.online ?? '0';
     document.getElementById('playersMax').textContent    = data.players?.max ?? '?';
-    document.getElementById('version').textContent       = combinedVersion;
+    document.getElementById('version').textContent       = STATIC_VERSION;
     document.getElementById('ping').textContent          = ping + 'ms';
     document.getElementById('motd').textContent =
       data.motd?.clean?.join(' ') || '(no message set)';
@@ -161,7 +144,7 @@ async function fetchStatus() {
 function reset() {
   document.getElementById('playersOnline').textContent = '—';
   document.getElementById('playersMax').textContent    = '—';
-  document.getElementById('version').textContent       = 'unknown';
+  document.getElementById('version').textContent       = STATIC_VERSION;
   document.getElementById('ping').textContent          = '—';
   document.getElementById('motd').textContent          = '—';
   document.getElementById('playerList').innerHTML =
